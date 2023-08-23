@@ -1,3 +1,13 @@
+install:
+	@go get -u -d github.com/vektra/mockery
+	@go get -u -d github.com/golang-migrate/migrate
+
+test:
+	@echo Testing Internal
+	@go test ./internal/...
+	@echo Testing Packages
+	@go test ./pkg/...
+
 #============================ Migrations ============================
 
 force:
@@ -22,6 +32,11 @@ local:
 	@echo "Starting local environment"
 	@docker-compose -f build/local/docker-compose.yml up --build
 
+#========================== Mockery support ==========================
+
+mocks:
+	find ./internal/core/ -type f -name 'domain.go' -exec bash -c 'dir=$$(dirname "{}"); cd $$dir; mockery --dir . --outpkg mocks --all' \;
+#	find ./internal/core/ -type f -name 'domain.go' -exec bash -c 'dir=$$(dirname "{}"); cd $$dir; mockery --dir . --outpkg $$(basename "$$dir")mocks --all' \;
 
 #========================== Docker support ==========================
 
