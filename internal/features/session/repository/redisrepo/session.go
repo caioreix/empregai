@@ -27,7 +27,9 @@ func NewSessionRepository(c *redis.Client, cfg *config.Config) session.Repositor
 
 // CreateSession in redis
 func (r *sessionRepository) CreateSession(ctx context.Context, userID uuid.UUID) (string, error) {
-	s := &session.Session{}
+	s := &session.Session{
+		UserID: userID,
+	}
 
 	s.SessionID = uuid.New().String()
 	sessionKey := r.newKey(s.SessionID)

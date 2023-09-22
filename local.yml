@@ -1,0 +1,37 @@
+server:
+  SSL: true
+  Host: localhost
+  Port: 5000
+  ReadTimeout: 5s
+  WriteTimeout: 5s
+  JWTSecret: secret-key
+
+session:
+  BasePrefix: api-session
+  Name: session-id
+  duration: 3600s
+
+cookie:
+  Name: jwt-token
+  Domain: ""
+  MaxAge: 86400
+  Secure: false
+  Path: /
+  HttpOnly: true
+
+postgres:
+  Host: localhost
+  Port: 5432
+  User: postgres
+  Password: postgres
+  DBName: auth_db
+  SSLMode: false
+  Driver: pgx
+
+redis:
+  Addr: localhost:6379
+  MinIdleConns: 200
+  PoolSize: 12000
+  PoolTimeout: 240
+  Password: ""
+  DB: 0

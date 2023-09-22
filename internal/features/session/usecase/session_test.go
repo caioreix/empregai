@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"go-api/internal/core/session"
-	"go-api/internal/core/session/mocks"
+	sessionmock "go-api/internal/core/session/mocks"
 	"go-api/internal/features/session/usecase"
 	"go-api/pkg/config"
 )
@@ -120,10 +120,10 @@ func TestSessionUC_DeleteByID(t *testing.T) {
 	})
 }
 
-func setupTest(t *testing.T) (*mocks.Repository, session.UseCase) {
+func setupTest(t *testing.T) (*sessionmock.Repository, session.UseCase) {
 	t.Helper()
 
-	mockRepo := mocks.NewRepository(t)
+	mockRepo := sessionmock.NewRepository(t)
 	cfg := &config.Config{}
 	sessUC := usecase.NewSessionUseCase(mockRepo, cfg)
 

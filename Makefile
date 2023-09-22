@@ -1,12 +1,24 @@
 install:
 	@go get -u -d github.com/vektra/mockery
 	@go get -u -d github.com/golang-migrate/migrate
+	@go install github.com/cespare/reflex@latest
+# @curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.54.2
+
+
+update:
+	@go mod tidy
 
 test:
 	@echo Testing Internal
 	@go test ./internal/...
 	@echo Testing Packages
 	@go test ./pkg/...
+
+run:
+	@go run ./cmd/api/...
+
+dev:
+	@reflex -r "\.go$$" -s -- sh -c "go run ./cmd/api"
 
 #============================ Migrations ============================
 
@@ -35,8 +47,7 @@ local:
 #========================== Mockery support ==========================
 
 mocks:
-	find ./internal/core/ -type f -name 'domain.go' -exec bash -c 'dir=$$(dirname "{}"); cd $$dir; mockery --dir . --outpkg mocks --all' \;
-#	find ./internal/core/ -type f -name 'domain.go' -exec bash -c 'dir=$$(dirname "{}"); cd $$dir; mockery --dir . --outpkg $$(basename "$$dir")mocks --all' \;
+	find ./internal/core/ -type f -name 'domain.go' -exec bash -c 'dir=$$(dirname "{}"); cd $$dir; mockery --dir . --outpkg $$(basename "$$dir")mock --all' \;
 
 #========================== Docker support ==========================
 
