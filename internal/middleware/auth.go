@@ -22,7 +22,7 @@ func (m *Manager) AuthSession() gin.HandlerFunc {
 				"request_id": requestID,
 			})
 
-			c.JSON(apierrors.Unauthorized("", "").JSON())
+			c.JSON(apierrors.Unauthorized().JSON())
 			c.Abort()
 			return
 		}
@@ -34,7 +34,7 @@ func (m *Manager) AuthSession() gin.HandlerFunc {
 				"request_id": requestID,
 			})
 
-			c.JSON(apierrors.Unauthorized("", "").JSON())
+			c.JSON(apierrors.Unauthorized().JSON())
 			c.Abort()
 			return
 		}
@@ -46,7 +46,7 @@ func (m *Manager) AuthSession() gin.HandlerFunc {
 				"request_id": requestID,
 			})
 
-			c.JSON(apierrors.Unauthorized("", "").JSON())
+			c.JSON(apierrors.Unauthorized().JSON())
 			c.Abort()
 			return
 		}

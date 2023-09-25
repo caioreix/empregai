@@ -63,7 +63,7 @@ func (u *Raw) Sanitize() {
 func GetUserFromCtx(ctx context.Context) (*Raw, error) {
 	user, ok := ctx.Value(CtxKey{}).(*Raw)
 	if !ok {
-		return nil, apierrors.Unauthorized("", "")
+		return nil, apierrors.Unauthorized()
 	}
 
 	return user, nil

@@ -53,7 +53,7 @@ func (uc *userUseCase) Login(ctx context.Context, email, password string) (*user
 	}
 
 	if !foundUser.ComparePassword(password) {
-		return nil, apierrors.Unauthorized("", "")
+		return nil, apierrors.Unauthorized()
 	}
 
 	foundUser.Sanitize()

@@ -33,7 +33,7 @@ func (h *userHandler) Register() gin.HandlerFunc {
 		usr := &user.Raw{}
 		err := c.Bind(usr)
 		if err != nil {
-			c.JSON(apierrors.BadRequest("", "").JSON())
+			c.JSON(apierrors.BadRequest().JSON())
 			return
 		}
 
@@ -65,7 +65,7 @@ func (h *userHandler) Login() gin.HandlerFunc {
 		login := &Login{}
 		err := c.Bind(login)
 		if err != nil {
-			c.JSON(apierrors.BadRequest("", "").JSON())
+			c.JSON(apierrors.BadRequest().JSON())
 			return
 		}
 
@@ -96,7 +96,7 @@ func (h *userHandler) Logout() gin.HandlerFunc {
 		}
 
 		if sessionID == "" {
-			c.JSON(apierrors.Unauthorized("", "").JSON())
+			c.JSON(apierrors.Unauthorized().JSON())
 			return
 		}
 
@@ -123,7 +123,7 @@ func (h *userHandler) Update() gin.HandlerFunc {
 		user := &user.Raw{}
 		err = c.Bind(user)
 		if err != nil {
-			c.JSON(apierrors.BadRequest("", "").JSON())
+			c.JSON(apierrors.BadRequest().JSON())
 			return
 		}
 		user.ID = id
@@ -184,13 +184,13 @@ func (h *userHandler) GetUsers() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		size, err := strconv.Atoi(c.Query("size"))
 		if err != nil {
-			c.JSON(apierrors.JSON(apierrors.BadRequest("", "invalid size")))
+			c.JSON(apierrors.BadRequest("invalid size").JSON())
 			return
 		}
 
 		page, err := strconv.Atoi(c.Query("page"))
 		if err != nil {
-			c.JSON(apierrors.JSON(apierrors.BadRequest("", "invalid page")))
+			c.JSON(apierrors.BadRequest("invalid page").JSON())
 			return
 		}
 

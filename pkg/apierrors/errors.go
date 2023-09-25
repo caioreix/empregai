@@ -11,10 +11,12 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
+const separator = ": "
+
 // APIError represents a common API error structure.
 type APIError struct {
 	HTTPStatus int    `json:"-"`
-	Code       string `json:"code"`
+	ErrCode    string `json:"code"`
 	Message    string `json:"message"`
 }
 
@@ -29,43 +31,47 @@ func NewAPIError(statusCode int, code, message string) *APIError {
 
 	return &APIError{
 		HTTPStatus: statusCode,
-		Code:       code,
+		ErrCode:    code,
 		Message:    message,
 	}
 }
 
+func (e *APIError) Code(code string) {
+	e.ErrCode = code
+}
+
 // BadRequest creates a 400 Bad Request error.
-func BadRequest(code, message string) *APIError {
-	return NewAPIError(http.StatusBadRequest, code, message)
+func BadRequest(messages ...string) *APIError {
+	return NewAPIError(http.StatusBadRequest, "", strings.Join(messages, separator))
 }
 
 // Unauthorized creates a 401 Unauthorized error.
-func Unauthorized(code, message string) *APIError {
-	return NewAPIError(http.StatusUnauthorized, code, message)
+func Unauthorized(messages ...string) *APIError {
+	return NewAPIError(http.StatusUnauthorized, "", strings.Join(messages, separator))
 }
 
 // Forbidden creates a 403 Forbidden error.
-func Forbidden(code, message string) *APIError {
-	return NewAPIError(http.StatusForbidden, code, message)
+func Forbidden(messages ...string) *APIError {
+	return NewAPIError(http.StatusForbidden, "", strings.Join(messages, separator))
 }
 
 // NotFound creates a 404 Not Found error.
-func NotFound(code, message string) *APIError {
-	return NewAPIError(http.StatusNotFound, code, message)
+func NotFound(messages ...string) *APIError {
+	return NewAPIError(http.StatusNotFound, "", strings.Join(messages, separator))
 }
 
-func Conflict(code, message string) *APIError {
-	return NewAPIError(http.StatusConflict, code, message)
+func Conflict(messages ...string) *APIError {
+	return NewAPIError(http.StatusConflict, "", strings.Join(messages, separator))
 }
 
 // InternalServerError creates a 500 Internal Server Error.
-func InternalServerError(code, message string) *APIError {
-	return NewAPIError(http.StatusInternalServerError, code, message)
+func InternalServerError(messages ...string) *APIError {
+	return NewAPIError(http.StatusInternalServerError, "", strings.Join(messages, separator))
 }
 
 // NotImplemented creates a 501 Not Implemented error.
-func NotImplemented(code, message string) *APIError {
-	return NewAPIError(http.StatusNotImplemented, code, message)
+func NotImplemented(messages ...string) *APIError {
+	return NewAPIError(http.StatusNotImplemented, "", strings.Join(messages, separator))
 }
 
 func Parse(err error) *APIError {
@@ -75,24 +81,24 @@ func Parse(err error) *APIError {
 	case errors.As(err, &apiErr): // First check!
 		return apiErr
 	case errors.Is(err, http.ErrNoCookie):
-		return Unauthorized("", "")
+		return Unauthorized()
 	case errors.Is(err, sql.ErrNoRows):
-		return NotFound("", "")
+		return NotFound()
 	case uuid.IsInvalidLengthError(err):
-		return BadRequest("", "")
+		return BadRequest()
 	case errors.Is(err, redis.Nil):
-		return NotFound("", "")
+		return NotFound()
 	case strings.Contains(err.Error(), "duplicate key value"):
-		return Conflict("", "")
+		return Conflict()
 	default:
-		return InternalServerError("", "")
+		return InternalServerError()
 	}
 }
 
 // JSON represents the error in JSON format.
 func (e *APIError) JSON() (int, map[string]interface{}) {
 	return e.HTTPStatus, map[string]interface{}{
-		"code":    e.Code,
+		"code":    e.ErrCode,
 		"message": e.Message,
 	}
 }
@@ -105,7 +111,7 @@ func JSON(err error) (int, map[string]interface{}) {
 		return apiErr.JSON()
 	}
 
-	return InternalServerError("", "").JSON()
+	return InternalServerError().JSON()
 }
 
 // StatusCode returns the associated HTTP status code for the error.
@@ -115,5 +121,5 @@ func (e *APIError) StatusCode() int {
 
 // Error implements the error interface.
 func (e *APIError) Error() string {
-	return fmt.Sprintf("API Error: %s - %s", e.Code, e.Message)
+	return fmt.Sprintf("API Error: %s - %s", e.ErrCode, e.Message)
 }
