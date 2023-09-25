@@ -1,10 +1,12 @@
 package user
 
 import (
+	"context"
 	"time"
 
 	"github.com/google/uuid"
 
+	"go-api/pkg/apierrors"
 	"go-api/pkg/utils"
 )
 
@@ -35,6 +37,9 @@ type Token struct {
 	Token string `json:"token"`
 }
 
+// CtxKey is a key used for the User object in the context
+type CtxKey struct{}
+
 func (u *Raw) HashPassword() error {
 	hash, err := utils.HashPassword(u.Password)
 	if err != nil {
@@ -52,4 +57,14 @@ func (u *Raw) ComparePassword(password string) bool {
 
 func (u *Raw) Sanitize() {
 	u.Password = ""
+}
+
+// Get user from context
+func GetUserFromCtx(ctx context.Context) (*Raw, error) {
+	user, ok := ctx.Value(CtxKey{}).(*Raw)
+	if !ok {
+		return nil, apierrors.Unauthorized("", "")
+	}
+
+	return user, nil
 }

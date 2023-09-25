@@ -6,6 +6,14 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Logger config
+type Logger struct {
+	Level             string
+	DisableStacktrace bool
+	DisableCaller     bool
+	Development       bool
+}
+
 // Server config
 type Server struct {
 	SSL          bool
@@ -56,6 +64,7 @@ type Redis struct {
 
 // Config centralizer
 type Config struct {
+	Logger   Logger
 	Server   Server
 	Session  Session
 	Cookie   Cookie

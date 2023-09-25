@@ -10,6 +10,7 @@ import (
 	userhandler "go-api/internal/features/user/delivery/http"
 	userrepo "go-api/internal/features/user/repository/postgres"
 	userusecase "go-api/internal/features/user/usecase"
+	"go-api/internal/middleware"
 )
 
 func (s *Server) MapHandlers() error {
@@ -28,12 +29,15 @@ func (s *Server) MapHandlers() error {
 		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
 	})
 
-	v1 := s.gin.Group("/api/v1")
+	mw := middleware.New(s.cfg, s.logger, userUC, sessionUC)
+
+	v1 := s.gin.Group("/v1")
+	v1.Use(mw.RequestID())
 
 	health := v1.Group("/health")
 	authGroup := v1.Group("/auth")
 
-	userhandler.MapUserRoutes(authGroup, userHandlers)
+	userhandler.MapUserRoutes(authGroup, userHandlers, mw)
 
 	health.GET("", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{

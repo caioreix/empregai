@@ -1,3 +1,9 @@
+logger:
+  Level: debug
+  DisableStacktrace: true
+  DisableCaller: false
+  Development: true
+
 server:
   SSL: true
   Host: localhost

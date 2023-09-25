@@ -69,12 +69,10 @@ func NotImplemented(code, message string) *APIError {
 }
 
 func Parse(err error) *APIError {
-	fmt.Println(err) // TODO remove this work around
-
 	var apiErr *APIError
 
 	switch {
-	case errors.As(err, &apiErr):
+	case errors.As(err, &apiErr): // First check!
 		return apiErr
 	case errors.Is(err, http.ErrNoCookie):
 		return Unauthorized("", "")

@@ -15,6 +15,7 @@ import (
 	"github.com/redis/go-redis/v9"
 
 	"go-api/pkg/config"
+	"go-api/pkg/logger"
 )
 
 const (
@@ -28,15 +29,17 @@ const (
 type Server struct {
 	gin         *gin.Engine
 	cfg         *config.Config
+	logger      logger.Logger
 	db          *sqlx.DB
 	redisClient *redis.Client
 }
 
 // NewServer constructor
-func NewServer(cfg *config.Config, db *sqlx.DB, redisClient *redis.Client) *Server {
+func NewServer(cfg *config.Config, logger logger.Logger, db *sqlx.DB, redisClient *redis.Client) *Server {
 	return &Server{
 		gin:         gin.Default(),
 		cfg:         cfg,
+		logger:      logger,
 		db:          db,
 		redisClient: redisClient,
 	}

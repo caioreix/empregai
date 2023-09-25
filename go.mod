@@ -57,6 +57,8 @@ require (
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	github.com/vektra/mockery v1.1.2 // indirect
 	github.com/yuin/gopher-lua v1.1.0 // indirect
+	go.uber.org/multierr v1.10.0 // indirect
+	go.uber.org/zap v1.26.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect

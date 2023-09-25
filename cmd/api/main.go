@@ -8,6 +8,7 @@ import (
 	"go-api/pkg/config"
 	"go-api/pkg/db/postgres"
 	"go-api/pkg/db/redis"
+	"go-api/pkg/logger"
 )
 
 var (
@@ -32,6 +33,11 @@ func main() {
 		log.Fatalf("ParseConfig: %v", err)
 	}
 
+	logg, err := logger.NewZapLogger(cfg)
+	if err != nil {
+		log.Fatalf("NewLogger: %v", err)
+	}
+
 	pqDB, err := postgres.NewDB(cfg)
 	if err != nil {
 		log.Fatalf("Postgresql init: %s", err)
@@ -44,7 +50,7 @@ func main() {
 	defer redisClient.Close()
 	log.Printf("Redis connected")
 
-	s := server.NewServer(cfg, pqDB, redisClient)
+	s := server.NewServer(cfg, logg, pqDB, redisClient)
 	if err = s.Run(); err != nil {
 		log.Fatal(err)
 	}
