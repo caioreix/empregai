@@ -16,28 +16,24 @@ type Handlers interface {
 	Update() gin.HandlerFunc
 	Delete() gin.HandlerFunc
 	GetUserByID() gin.HandlerFunc
-	// FindByName() gin.HandlerFunc
 	GetUsers() gin.HandlerFunc
 	GetMe() gin.HandlerFunc
-	// GetCSRFToken() gin.HandlerFunc
 }
 
 type Repository interface {
-	Register(ctx context.Context, user *Raw) (*Raw, error)
-	Update(ctx context.Context, user *Raw) (*Raw, error)
+	Register(ctx context.Context, user *Model) (*Model, error)
+	Update(ctx context.Context, user *Model) (*Model, error)
 	Delete(ctx context.Context, userID uuid.UUID) error
-	GetByID(ctx context.Context, userID uuid.UUID) (*Raw, error)
-	// FindByName(ctx context.Context, name string, query *utils.PaginationQuery) (*List, error)
-	FindByEmail(ctx context.Context, email string) (*Raw, error)
+	GetByID(ctx context.Context, userID uuid.UUID) (*Model, error)
+	FindByEmail(ctx context.Context, email string) (*Model, error)
 	GetUsers(ctx context.Context, pq *utils.PaginationQuery) (*List, error)
 }
 
 type UseCase interface {
-	Register(ctx context.Context, user *Raw) (*Token, error)
+	Register(ctx context.Context, user *Model) (*Token, error)
 	Login(ctx context.Context, email, password string) (*Token, error)
-	Update(ctx context.Context, user *Raw) (*Raw, error)
+	Update(ctx context.Context, user *Model) (*Model, error)
 	Delete(ctx context.Context, userID uuid.UUID) error
-	GetByID(ctx context.Context, userID uuid.UUID) (*Raw, error)
-	// FindByName(ctx context.Context, name string, query *utils.PaginationQuery) (*List, error)
+	GetByID(ctx context.Context, userID uuid.UUID) (*Model, error)
 	GetUsers(ctx context.Context, pq *utils.PaginationQuery) (*List, error)
 }

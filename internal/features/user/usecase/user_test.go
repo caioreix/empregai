@@ -19,10 +19,10 @@ func TestUserUseCase_Register(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		ctx, mock, uc := setupTest(t)
 
-		usr := &user.Raw{
-			Name:     "Fake Name",
+		usr := &user.Model{
 			Password: "fake_password",
 			Email:    "fake@mail.com",
+			Role:     "costumer",
 		}
 
 		mock.On("Register", ctx, usr).
@@ -41,7 +41,7 @@ func TestUserUseCase_Login(t *testing.T) {
 
 		password := "fake_password"
 
-		usr := &user.Raw{
+		usr := &user.Model{
 			Password: password,
 			Email:    "fake@mail.com",
 		}
@@ -64,10 +64,10 @@ func TestUserUseCase_Update(t *testing.T) {
 	t.Run("Success with password", func(t *testing.T) {
 		ctx, mock, uc := setupTest(t)
 
-		usr := &user.Raw{
-			Name:     "Fake Name",
+		usr := &user.Model{
 			Password: "fake_password",
 			Email:    "fake@mail.com",
+			Role:     "costumer",
 		}
 
 		mock.On("Update", ctx, usr).
@@ -83,9 +83,9 @@ func TestUserUseCase_Update(t *testing.T) {
 	t.Run("Success with no password", func(t *testing.T) {
 		ctx, mock, uc := setupTest(t)
 
-		usr := &user.Raw{
-			Name:  "Fake Name",
+		usr := &user.Model{
 			Email: "fake@mail.com",
+			Role:  "Fake Name",
 		}
 
 		mock.On("Update", ctx, usr).
@@ -131,11 +131,11 @@ func TestUserUseCase_GetByID(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		ctx, mock, uc := setupTest(t)
 
-		usr := &user.Raw{
+		usr := &user.Model{
 			ID:       uuid.New(),
-			Name:     "Fake Name",
 			Password: "fake_password",
 			Email:    "fake@mail.com",
+			Role:     "Fake Name",
 		}
 
 		mock.On("GetByID", ctx, usr.ID).
@@ -159,26 +159,26 @@ func TestUserUseCase_GetUsers(t *testing.T) {
 			Size:    10,
 		}
 
-		usr := &user.Raw{
+		usr := &user.Model{
 			ID:       uuid.New(),
-			Name:     "Fake Name",
 			Password: "fake_password",
 			Email:    "fake@mail.com",
+			Role:     "Fake Name",
 		}
 
 		list := &user.List{
-			Users: &[]*user.Raw{
+			Users: &[]*user.Model{
 				{
 					ID:       usr.ID,
-					Name:     usr.Name,
 					Password: "password",
 					Email:    usr.Email,
+					Role:     usr.Role,
 				},
 				{
 					ID:       usr.ID,
-					Name:     usr.Name,
 					Password: "password",
 					Email:    usr.Email,
+					Role:     usr.Role,
 				},
 			},
 		}

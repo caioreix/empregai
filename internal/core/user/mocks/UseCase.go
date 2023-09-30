@@ -33,19 +33,19 @@ func (_m *UseCase) Delete(ctx context.Context, userID uuid.UUID) error {
 }
 
 // GetByID provides a mock function with given fields: ctx, userID
-func (_m *UseCase) GetByID(ctx context.Context, userID uuid.UUID) (*user.Raw, error) {
+func (_m *UseCase) GetByID(ctx context.Context, userID uuid.UUID) (*user.Model, error) {
 	ret := _m.Called(ctx, userID)
 
-	var r0 *user.Raw
+	var r0 *user.Model
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, uuid.UUID) (*user.Raw, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, uuid.UUID) (*user.Model, error)); ok {
 		return rf(ctx, userID)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, uuid.UUID) *user.Raw); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, uuid.UUID) *user.Model); ok {
 		r0 = rf(ctx, userID)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*user.Raw)
+			r0 = ret.Get(0).(*user.Model)
 		}
 	}
 
@@ -111,15 +111,15 @@ func (_m *UseCase) Login(ctx context.Context, email string, password string) (*u
 }
 
 // Register provides a mock function with given fields: ctx, _a1
-func (_m *UseCase) Register(ctx context.Context, _a1 *user.Raw) (*user.Token, error) {
+func (_m *UseCase) Register(ctx context.Context, _a1 *user.Model) (*user.Token, error) {
 	ret := _m.Called(ctx, _a1)
 
 	var r0 *user.Token
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, *user.Raw) (*user.Token, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *user.Model) (*user.Token, error)); ok {
 		return rf(ctx, _a1)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, *user.Raw) *user.Token); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *user.Model) *user.Token); ok {
 		r0 = rf(ctx, _a1)
 	} else {
 		if ret.Get(0) != nil {
@@ -127,7 +127,7 @@ func (_m *UseCase) Register(ctx context.Context, _a1 *user.Raw) (*user.Token, er
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, *user.Raw) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, *user.Model) error); ok {
 		r1 = rf(ctx, _a1)
 	} else {
 		r1 = ret.Error(1)
@@ -137,23 +137,23 @@ func (_m *UseCase) Register(ctx context.Context, _a1 *user.Raw) (*user.Token, er
 }
 
 // Update provides a mock function with given fields: ctx, _a1
-func (_m *UseCase) Update(ctx context.Context, _a1 *user.Raw) (*user.Raw, error) {
+func (_m *UseCase) Update(ctx context.Context, _a1 *user.Model) (*user.Model, error) {
 	ret := _m.Called(ctx, _a1)
 
-	var r0 *user.Raw
+	var r0 *user.Model
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, *user.Raw) (*user.Raw, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *user.Model) (*user.Model, error)); ok {
 		return rf(ctx, _a1)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, *user.Raw) *user.Raw); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *user.Model) *user.Model); ok {
 		r0 = rf(ctx, _a1)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*user.Raw)
+			r0 = ret.Get(0).(*user.Model)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, *user.Raw) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, *user.Model) error); ok {
 		r1 = rf(ctx, _a1)
 	} else {
 		r1 = ret.Error(1)

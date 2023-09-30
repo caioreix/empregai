@@ -33,19 +33,19 @@ func (_m *Repository) Delete(ctx context.Context, userID uuid.UUID) error {
 }
 
 // FindByEmail provides a mock function with given fields: ctx, email
-func (_m *Repository) FindByEmail(ctx context.Context, email string) (*user.Raw, error) {
+func (_m *Repository) FindByEmail(ctx context.Context, email string) (*user.Model, error) {
 	ret := _m.Called(ctx, email)
 
-	var r0 *user.Raw
+	var r0 *user.Model
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string) (*user.Raw, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string) (*user.Model, error)); ok {
 		return rf(ctx, email)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string) *user.Raw); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string) *user.Model); ok {
 		r0 = rf(ctx, email)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*user.Raw)
+			r0 = ret.Get(0).(*user.Model)
 		}
 	}
 
@@ -59,19 +59,19 @@ func (_m *Repository) FindByEmail(ctx context.Context, email string) (*user.Raw,
 }
 
 // GetByID provides a mock function with given fields: ctx, userID
-func (_m *Repository) GetByID(ctx context.Context, userID uuid.UUID) (*user.Raw, error) {
+func (_m *Repository) GetByID(ctx context.Context, userID uuid.UUID) (*user.Model, error) {
 	ret := _m.Called(ctx, userID)
 
-	var r0 *user.Raw
+	var r0 *user.Model
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, uuid.UUID) (*user.Raw, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, uuid.UUID) (*user.Model, error)); ok {
 		return rf(ctx, userID)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, uuid.UUID) *user.Raw); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, uuid.UUID) *user.Model); ok {
 		r0 = rf(ctx, userID)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*user.Raw)
+			r0 = ret.Get(0).(*user.Model)
 		}
 	}
 
@@ -111,23 +111,23 @@ func (_m *Repository) GetUsers(ctx context.Context, pq *utils.PaginationQuery) (
 }
 
 // Register provides a mock function with given fields: ctx, _a1
-func (_m *Repository) Register(ctx context.Context, _a1 *user.Raw) (*user.Raw, error) {
+func (_m *Repository) Register(ctx context.Context, _a1 *user.Model) (*user.Model, error) {
 	ret := _m.Called(ctx, _a1)
 
-	var r0 *user.Raw
+	var r0 *user.Model
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, *user.Raw) (*user.Raw, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *user.Model) (*user.Model, error)); ok {
 		return rf(ctx, _a1)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, *user.Raw) *user.Raw); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *user.Model) *user.Model); ok {
 		r0 = rf(ctx, _a1)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*user.Raw)
+			r0 = ret.Get(0).(*user.Model)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, *user.Raw) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, *user.Model) error); ok {
 		r1 = rf(ctx, _a1)
 	} else {
 		r1 = ret.Error(1)
@@ -137,23 +137,23 @@ func (_m *Repository) Register(ctx context.Context, _a1 *user.Raw) (*user.Raw, e
 }
 
 // Update provides a mock function with given fields: ctx, _a1
-func (_m *Repository) Update(ctx context.Context, _a1 *user.Raw) (*user.Raw, error) {
+func (_m *Repository) Update(ctx context.Context, _a1 *user.Model) (*user.Model, error) {
 	ret := _m.Called(ctx, _a1)
 
-	var r0 *user.Raw
+	var r0 *user.Model
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, *user.Raw) (*user.Raw, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *user.Model) (*user.Model, error)); ok {
 		return rf(ctx, _a1)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, *user.Raw) *user.Raw); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *user.Model) *user.Model); ok {
 		r0 = rf(ctx, _a1)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*user.Raw)
+			r0 = ret.Get(0).(*user.Model)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, *user.Raw) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, *user.Model) error); ok {
 		r1 = rf(ctx, _a1)
 	} else {
 		r1 = ret.Error(1)

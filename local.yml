@@ -30,7 +30,7 @@ postgres:
   Port: 5432
   User: postgres
   Password: postgres
-  DBName: auth_db
+  DBName: account_db
   SSLMode: false
   Driver: pgx
 

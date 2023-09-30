@@ -30,7 +30,7 @@ func NewUserHandler(cfg *config.Config, userUC user.UseCase, sessionUC session.U
 
 func (h *userHandler) Register() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		usr := &user.Raw{}
+		usr := &user.Model{}
 		err := c.Bind(usr)
 		if err != nil {
 			c.JSON(apierrors.BadRequest().JSON())
@@ -120,7 +120,7 @@ func (h *userHandler) Update() gin.HandlerFunc {
 			return
 		}
 
-		user := &user.Raw{}
+		user := &user.Model{}
 		err = c.Bind(user)
 		if err != nil {
 			c.JSON(apierrors.BadRequest().JSON())

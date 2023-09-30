@@ -22,7 +22,7 @@ func TestUserRepository_Register(t *testing.T) {
 		defer db.Close()
 
 		mock.ExpectQuery(createUserQuery).
-			WithArgs(want.Name, want.Email, want.Password).
+			WithArgs(want.Email, want.Password, want.Role).
 			WillReturnRows(rows)
 
 		got, err := repo.Register(context.TODO(), want)
@@ -37,7 +37,7 @@ func TestUserRepository_Update(t *testing.T) {
 		defer db.Close()
 
 		mock.ExpectQuery(updateUserQuery).
-			WithArgs(want.ID, want.Name, want.Email, want.Password).
+			WithArgs(want.ID, want.Email, want.Password, want.Role).
 			WillReturnRows(rows)
 
 		got, err := repo.Update(context.TODO(), want)
@@ -140,17 +140,17 @@ func TestUserRepository_GetUsers(t *testing.T) {
 	})
 }
 
-func setupTest(t *testing.T) (*sql.DB, user.Repository, sqlmock.Sqlmock, *user.Raw, *sqlmock.Rows) {
+func setupTest(t *testing.T) (*sql.DB, user.Repository, sqlmock.Sqlmock, *user.Model, *sqlmock.Rows) {
 	db, mock, err := sqlmock.New()
 	assert.NoError(t, err)
 	dbx := sqlx.NewDb(db, "sqlmock")
 	repo := postgres.NewUserRepository(dbx)
 
-	want := &user.Raw{
+	want := &user.Model{
 		ID:        uuid.New(),
-		Name:      "Fake Name",
 		Email:     "fake@mail.com",
 		Password:  "fake_password",
+		Role:      "costumer",
 		LastLogin: time.Now().UTC(),
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),
@@ -158,17 +158,17 @@ func setupTest(t *testing.T) (*sql.DB, user.Repository, sqlmock.Sqlmock, *user.R
 
 	rows := sqlmock.NewRows([]string{
 		"id",
-		"name",
 		"email",
 		"password",
+		"role",
 		"created_at",
 		"updated_at",
 		"last_login",
 	}).AddRow(
 		want.ID,
-		want.Name,
 		want.Email,
 		want.Password,
+		want.Role,
 		want.CreatedAt,
 		want.UpdatedAt,
 		want.LastLogin,

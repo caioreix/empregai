@@ -22,7 +22,7 @@ func NewUserUseCase(cfg *config.Config, repo user.Repository) user.UseCase {
 	return &userUseCase{cfg: cfg, repo: repo}
 }
 
-func (uc *userUseCase) Register(ctx context.Context, usr *user.Raw) (*user.Token, error) {
+func (uc *userUseCase) Register(ctx context.Context, usr *user.Model) (*user.Token, error) {
 	err := usr.HashPassword()
 	if err != nil {
 		return nil, err
@@ -70,7 +70,7 @@ func (uc *userUseCase) Login(ctx context.Context, email, password string) (*user
 	}, nil
 }
 
-func (uc *userUseCase) Update(ctx context.Context, usr *user.Raw) (*user.Raw, error) {
+func (uc *userUseCase) Update(ctx context.Context, usr *user.Model) (*user.Model, error) {
 	if usr.Password != "" {
 		err := usr.HashPassword()
 		if err != nil {
@@ -97,7 +97,7 @@ func (uc *userUseCase) Delete(ctx context.Context, userID uuid.UUID) error {
 	return nil
 }
 
-func (uc *userUseCase) GetByID(ctx context.Context, userID uuid.UUID) (*user.Raw, error) {
+func (uc *userUseCase) GetByID(ctx context.Context, userID uuid.UUID) (*user.Model, error) {
 	usr, err := uc.repo.GetByID(ctx, userID)
 	if err != nil {
 		return nil, err

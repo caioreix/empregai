@@ -26,16 +26,14 @@ func TestUserHandler_Register(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		var (
 			cfg, ctx, rw, userUC, sessionUC, h = setupTest(t)
-			usr                                = &user.Raw{
-				Name:     "Fake Name",
+			usr                                = &user.Model{
 				Email:    "fake@mail.com",
 				Password: "fake_password",
 			}
 			userID   = uuid.New()
 			usrToken = &user.Token{
-				User: &user.Raw{
+				User: &user.Model{
 					ID:        userID,
-					Name:      usr.Name,
 					Email:     usr.Email,
 					Password:  "",
 					CreatedAt: time.Now(),

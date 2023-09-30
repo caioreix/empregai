@@ -22,29 +22,29 @@ func NewUserRepository(db *sqlx.DB) user.Repository {
 	}
 }
 
-func (r *UserRepository) Register(ctx context.Context, usr *user.Raw) (*user.Raw, error) {
-	u := &user.Raw{}
+func (r *UserRepository) Register(ctx context.Context, usr *user.Model) (*user.Model, error) {
+	u := &user.Model{}
 	err := r.conn.QueryRowxContext(
 		ctx,
 		createUserQuery,
-		usr.Name,
 		usr.Email,
 		usr.Password,
+		usr.Role,
 	).StructScan(u)
 
 	return u, errors.Wrap(err, "UserRepository.Register.StructScan")
 }
 
-func (r *UserRepository) Update(ctx context.Context, usr *user.Raw) (*user.Raw, error) {
-	u := &user.Raw{}
+func (r *UserRepository) Update(ctx context.Context, usr *user.Model) (*user.Model, error) {
+	u := &user.Model{}
 	err := r.conn.GetContext(
 		ctx,
 		u,
 		updateUserQuery,
 		usr.ID,
-		usr.Name,
 		usr.Email,
 		usr.Password,
+		usr.Role,
 	)
 
 	return u, errors.Wrap(err, "UserRepository.Update.GetContext")
@@ -68,8 +68,8 @@ func (r *UserRepository) Delete(ctx context.Context, userID uuid.UUID) error {
 	return nil
 }
 
-func (r *UserRepository) GetByID(ctx context.Context, userID uuid.UUID) (*user.Raw, error) {
-	u := &user.Raw{}
+func (r *UserRepository) GetByID(ctx context.Context, userID uuid.UUID) (*user.Model, error) {
+	u := &user.Model{}
 	err := r.conn.QueryRowxContext(
 		ctx,
 		getUserByIDQuery,
@@ -79,8 +79,8 @@ func (r *UserRepository) GetByID(ctx context.Context, userID uuid.UUID) (*user.R
 	return u, errors.Wrap(err, "UserRepository.GetByID.StructScan")
 }
 
-func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*user.Raw, error) {
-	u := &user.Raw{}
+func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*user.Model, error) {
+	u := &user.Model{}
 	err := r.conn.QueryRowxContext(
 		ctx,
 		getUserByEmailQuery,
@@ -97,7 +97,7 @@ func (r *UserRepository) GetUsers(ctx context.Context, pagination *utils.Paginat
 		return nil, errors.Wrap(err, "UserRepository.GetUsers.GetContext")
 	}
 
-	users := make([]*user.Raw, 0, pagination.GetSize())
+	users := make([]*user.Model, 0, pagination.GetSize())
 	usersList := &user.List{
 		TotalCount: totalCount,
 		TotalPages: pagination.GetTotalPages(totalCount),
