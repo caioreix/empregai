@@ -1,9 +1,7 @@
 install:
-	@go get -u -d github.com/vektra/mockery
-	@go get -u -d github.com/golang-migrate/migrate
+	@go install github.com/vektra/mockery/v2@v2.34.0
+	@go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 	@go install github.com/cespare/reflex@latest
-# @curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.54.2
-
 
 update:
 	@go mod tidy
